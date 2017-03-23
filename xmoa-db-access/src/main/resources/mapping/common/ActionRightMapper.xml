@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zkxy.xmoa.common.dao.ActionRightMapper" >
+  <resultMap id="BaseResultMap" type="com.zkxy.xmoa.system.model.ActionRight" >
+    <id column="FID" property="fid" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MODULE_ID" property="moduleId" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FID, NAME, CODE, MODULE_ID, DESCRIPTION, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SYS_ACTIONRIGHT
+    where FID = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SYS_ACTIONRIGHT
+    where FID = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zkxy.xmoa.system.model.ActionRight" >
+    insert into T_SYS_ACTIONRIGHT (FID, NAME, CODE, 
+      MODULE_ID, DESCRIPTION, REMARK
+      )
+    values (#{fid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{moduleId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zkxy.xmoa.system.model.ActionRight" >
+    insert into T_SYS_ACTIONRIGHT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="moduleId != null" >
+        MODULE_ID,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zkxy.xmoa.system.model.ActionRight" >
+    update T_SYS_ACTIONRIGHT
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null" >
+        MODULE_ID = #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zkxy.xmoa.system.model.ActionRight" >
+    update T_SYS_ACTIONRIGHT
+    set NAME = #{name,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      MODULE_ID = #{moduleId,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+
+
+  <!--  * 注释以上为自动生成 替换请注意 -->
+
+
+
+  <!-- 查询所有模块-->
+  <select id="selectAllActionRight" resultType="map">
+    SELECT
+    FID, NAME, CODE, URL, ICON, NVL(PARENT_ID,'') as PARENT_ID, REMARK, SORT_NO, CREATE_USER, CREATE_TIME,
+    UPDATE_USER, UPDATE_TIME
+    FROM
+    T_SYS_ACTIONRIGHT t
+    WHERE
+    1=1
+    ORDER BY
+    t.code
+  </select>
+
+
+  <select id="selectActionRightByModuleId" parameterType="map" resultType="map">
+
+    SELECT t2.*,v.NAME AS MODULE_NAME from (
+
+    SELECT t1.FID,t1.NAME,t1.CODE,t1.REMARK,t1.PARENT_ID
+    from T_SYS_MODULE t1
+    WHERE t1.fid = #{moduleId,jdbcType=VARCHAR}
+    UNION ALL
+    SELECT t.FID,t.NAME,t.CODE,t.REMARK,t.PARENT_ID
+    from T_SYS_MODULE t
+    start with t.parent_id  = #{moduleId,jdbcType=VARCHAR}
+
+    connect by prior fid=parent_id
+    ) v
+     join T_SYS_ACTIONRIGHT t2 on v.FID=t2.MODULE_ID
+    WHERE
+    1=1
+
+    <if test="queryStr != null and queryStr !='' ">
+      and instr( t2.NAME, #{queryStr}) > 0
+    </if>
+
+
+    ORDER BY t2.code
+
+  </select>
+
+  <select id="selectActionRightWithOutModuleId" parameterType="map" resultType="map">
+    SELECT t.FID,t.NAME,t.CODE,t.REMARK,t.DESCRIPTION,t1.NAME AS MODULE_NAME
+    from T_SYS_ACTIONRIGHT t
+
+    left join T_SYS_MODULE t1 on t.MODULE_ID=t1.FID
+    WHERE
+    1=1
+    <if test="queryStr != null and queryStr !='' ">
+      and instr( t.NAME, #{queryStr}) > 0
+    </if>
+    ORDER BY t.code
+  </select>
+
+
+
+  <select id="selectCountByName" parameterType="com.zkxy.xmoa.system.model.ActionRight" resultType="int">
+    SELECT
+    count(1)
+    FROM
+    T_SYS_ACTIONRIGHT t
+    where
+    1=1
+    and t.NAME = #{name,jdbcType=VARCHAR}
+    <if test="fid != null and fid !='' ">
+      and t.fid != #{fid,jdbcType=VARCHAR}
+    </if>
+
+  </select>
+
+  <select id="selectCountByCode" parameterType="com.zkxy.xmoa.system.model.ActionRight" resultType="int">
+    SELECT
+    count(1)
+    FROM
+    T_SYS_ACTIONRIGHT t
+    where
+    1=1
+    and t.code = #{code,jdbcType=VARCHAR}
+    <if test="fid != null and fid !='' ">
+      and t.fid != #{fid,jdbcType=VARCHAR}
+    </if>
+
+  </select>
+
+
+  <select id="selectCountByParentId" resultType="int" parameterType="java.lang.String">
+    select
+    count(1)
+    from T_SYS_ACTIONRIGHT
+    where PARENT_ID = #{parentId,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 按模块查询 权限-->
+  <select id="selectByModuleId"  resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    T_SYS_ACTIONRIGHT t
+    WHERE
+    1=1
+    <if test="moduleId != null and moduleId !='' ">
+      and t.MODULE_ID = #{moduleId,jdbcType=VARCHAR}
+    </if>
+    <if test="moduleId == null or moduleId =='' ">
+      and t.MODULE_ID IS NULL
+    </if>
+    ORDER BY
+   t.code
+  </select>
+
+
+
+
+</mapper>

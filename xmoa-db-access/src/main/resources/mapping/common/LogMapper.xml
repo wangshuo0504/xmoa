@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zkxy.xmoa.common.dao.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.zkxy.xmoa.system.model.Log" >
+    <id column="FID" property="fid" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="DETAIL" property="detail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FID, USER_ID, TIME, TYPE, DETAIL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SYS_LOG
+    where FID = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SYS_LOG
+    where FID = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zkxy.xmoa.system.model.Log" >
+    insert into T_SYS_LOG (FID, USER_ID, TIME, 
+      TYPE, DETAIL)
+    values (#{fid,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zkxy.xmoa.system.model.Log" >
+    insert into T_SYS_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="detail != null" >
+        DETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zkxy.xmoa.system.model.Log" >
+    update T_SYS_LOG
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        TIME = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        DETAIL = #{detail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zkxy.xmoa.system.model.Log" >
+    update T_SYS_LOG
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      TIME = #{time,jdbcType=TIMESTAMP},
+      TYPE = #{type,jdbcType=VARCHAR},
+      DETAIL = #{detail,jdbcType=VARCHAR}
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+
+
+  <!--  * 注释以上为自动生成 替换请注意 -->
+
+
+</mapper>

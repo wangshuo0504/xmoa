@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zkxy.xmoa.common.dao.DeptMapper" >
+  <resultMap id="BaseResultMap" type="com.zkxy.xmoa.system.model.Dept" >
+    <id column="FID" property="fid" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="SHORT_NAME" property="shortName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="DEPT_MAIL" property="deptMail" jdbcType="VARCHAR" />
+    <result column="LEAD_ID" property="leadId" jdbcType="VARCHAR" />
+    <result column="ADMIN_ID" property="adminId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="SORT_NO" property="sortNo" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FID, NAME, CODE, SHORT_NAME, PARENT_ID, DEPT_MAIL, LEAD_ID, ADMIN_ID, REMARK, SORT_NO, 
+    CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SYS_DEPT
+    where FID = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SYS_DEPT
+    where FID = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zkxy.xmoa.system.model.Dept" >
+    insert into T_SYS_DEPT (FID, NAME, CODE, 
+      SHORT_NAME, PARENT_ID, DEPT_MAIL, 
+      LEAD_ID, ADMIN_ID, REMARK, 
+      SORT_NO, CREATE_USER, CREATE_TIME, 
+      UPDATE_USER, UPDATE_TIME)
+    values (#{fid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{deptMail,jdbcType=VARCHAR}, 
+      #{leadId,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{sortNo,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zkxy.xmoa.system.model.Dept" >
+    insert into T_SYS_DEPT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="deptMail != null" >
+        DEPT_MAIL,
+      </if>
+      <if test="leadId != null" >
+        LEAD_ID,
+      </if>
+      <if test="adminId != null" >
+        ADMIN_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="sortNo != null" >
+        SORT_NO,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptMail != null" >
+        #{deptMail,jdbcType=VARCHAR},
+      </if>
+      <if test="leadId != null" >
+        #{leadId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zkxy.xmoa.system.model.Dept" >
+    update T_SYS_DEPT
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptMail != null" >
+        DEPT_MAIL = #{deptMail,jdbcType=VARCHAR},
+      </if>
+      <if test="leadId != null" >
+        LEAD_ID = #{leadId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        SORT_NO = #{sortNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zkxy.xmoa.system.model.Dept" >
+    update T_SYS_DEPT
+    set NAME = #{name,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      DEPT_MAIL = #{deptMail,jdbcType=VARCHAR},
+      LEAD_ID = #{leadId,jdbcType=VARCHAR},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      SORT_NO = #{sortNo,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+
+
+  <!--  * 注释以上为自动生成 替换请注意 -->
+
+
+  <!-- 查询所有模块-->
+  <select id="selectAllDept" resultType="map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    T_SYS_DEPT t
+    WHERE
+    1=1
+    ORDER BY
+    t.code
+  </select>
+
+
+  <select id="selectDeptByParentId" parameterType="map" resultType="map">
+
+    SELECT v.*,t2.NAME AS PARENT_NAME from (
+
+    SELECT t1.FID,t1.NAME,t1.CODE,t1.SHORT_NAME,t1.REMARK,t1.PARENT_ID
+    from T_SYS_DEPT t1
+    WHERE t1.fid = #{parentId,jdbcType=VARCHAR}
+    UNION ALL
+    SELECT t.FID,t.NAME,t.CODE,t.SHORT_NAME,t.REMARK,t.PARENT_ID
+    from T_SYS_DEPT t
+    start with t.parent_id = #{parentId,jdbcType=VARCHAR}
+    connect by prior fid=parent_id
+    ) v
+    left join T_SYS_DEPT t2 on v.PARENT_ID=t2.FID
+    WHERE
+    1=1
+
+    <if test="queryStr != null and queryStr !='' ">
+      and instr( v.NAME, #{queryStr}) > 0
+    </if>
+
+
+    ORDER BY v.code
+
+  </select>
+
+
+  <select id="selectDeptWithOutParentId" parameterType="map" resultType="map">
+    SELECT t.FID,t.NAME,t.CODE,t.SHORT_NAME,t.REMARK,t1.NAME AS PARENT_NAME
+    from T_SYS_DEPT t
+    left join T_SYS_DEPT t1 on t.PARENT_ID=t1.FID
+    WHERE
+    1=1
+    <if test="queryStr != null and queryStr !='' ">
+      and instr( t.NAME, #{queryStr}) > 0
+    </if>
+    ORDER BY t.code
+  </select>
+
+  <select id="selectCountByName" parameterType="com.zkxy.xmoa.system.model.Dept" resultType="int">
+    SELECT
+    count(1)
+    FROM
+    T_SYS_DEPT t
+    where
+    1=1
+    and t.NAME = #{name,jdbcType=VARCHAR}
+    <if test="fid != null and fid !='' ">
+      and t.fid != #{fid,jdbcType=VARCHAR}
+    </if>
+
+  </select>
+
+  <select id="selectCountByCode" parameterType="com.zkxy.xmoa.system.model.Dept" resultType="int">
+    SELECT
+    count(1)
+    FROM
+    T_SYS_DEPT t
+    where
+    1=1
+    and t.code = #{code,jdbcType=VARCHAR}
+    <if test="fid != null and fid !='' ">
+      and t.fid != #{fid,jdbcType=VARCHAR}
+    </if>
+
+  </select>
+
+
+  <select id="selectCountByParentId" resultType="int" parameterType="java.lang.String">
+    select
+    count(1)
+    from T_SYS_DEPT
+    where PARENT_ID = #{parentId,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 查询所有单位-->
+  <select id="selectByParentId"  resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    T_SYS_DEPT t
+    WHERE
+    1=1
+    <if test="parentId != null and parentId !='' ">
+      and t.PARENT_ID = #{parentId,jdbcType=VARCHAR}
+    </if>
+    <if test="parentId == null or parentId =='' ">
+      and t.PARENT_ID IS NULL
+    </if>
+    ORDER BY
+    t.SORT_NO,t.code
+  </select>
+
+
+  <update id="updateSortNoByPrimaryKey" parameterType="com.zkxy.xmoa.system.model.Dept" >
+    update T_SYS_DEPT
+    set
+    SORT_NO = #{sortNo,jdbcType=VARCHAR}
+    where FID = #{fid,jdbcType=VARCHAR}
+  </update>
+</mapper>

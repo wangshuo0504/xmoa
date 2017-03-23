@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <!-- 如果是用cmd方式运行 这里应该写url方式写全路径 因为找不到classpath 对于resource来说 -->
+    <properties url="file:///D:\workspace\xmoa\xmoa-db-access\src\main\resources\mybatis-generator\mybatis.generator.generatorConfig.properties"/>
+
+    <!--   注意:   驱动文件，请修改为自己机器的对应目录 -->
+	<classPathEntry location="${drive.class.path}" />
+
+    <context id="context1" defaultModelType="flat" targetRuntime="MyBatis3" >
+        <property name="autoDelimitKeywords" value="true" />
+		<property name="beginningDelimiter" value="" />
+		<property name="endingDelimiter" value="" />
+        <plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
+            <property name="targetPackage" value=""/>
+            <property name="targetProject" value="xmoa-db-access/src/main/java"/>
+        </plugin>   
+         <!-- 注释 -->  
+         <commentGenerator>
+            <!-- 是否去除自动生成注释代时间戳  true：是 ： false:否 -->  
+            <property name="suppressDate" value="false"/>  
+            <!-- 是否去除自动生成的注释 true：是 ： false:否  -->  
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        
+         <!--数据库链接URL，用户名、密码 -->  
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}" password="${jdbc.password}" />
+
+        <!-- 类型转换 -->  
+        <javaTypeResolver>  
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->  
+            <property name="forceBigDecimals" value="false"/>  
+        </javaTypeResolver>  
+        
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="${model.targetPackage}" targetProject="${model.targetProject}">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->  
+            <property name="enableSubPackages" value="true" />
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->  
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        
+        <!-- 生成mapxml文件 -->  
+        <sqlMapGenerator targetPackage="${mapping.targetPackage}" targetProject="${mapping.targetProject}">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->  
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        
+        <!-- 生成mapxml对应client，也就是接口dao -->    
+        <javaClientGenerator targetPackage="${dao.targetPackage}" targetProject="${dao.targetProject}" type="XMLMAPPER">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->  
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+
+        <!-- 配置表信息 ，生成的dto名称    运营表暂时不生成-->
+        <table  tableName="${table.tableName}"    domainObjectName="${model.domainObjectName}"
+               enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+
+
+    </context>
+</generatorConfiguration>

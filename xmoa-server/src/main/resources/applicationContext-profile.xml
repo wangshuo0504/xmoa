@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<beans profile="local">
+		<context:property-placeholder
+			ignore-resource-not-found="true"
+			location="classpath:/config/config_base_local.properties,classpath:/config/config_db_local.properties" />
+	</beans>
+	
+	<beans profile="test">
+		<context:property-placeholder
+			ignore-resource-not-found="true"
+			location="classpath:/config/config_base_test.properties,classpath:/config/config_db_test.properties" />
+	</beans>
+	<beans profile="uat">
+		<context:property-placeholder
+			ignore-resource-not-found="true"
+			location="classpath:/config/config_base_uat.properties,classpath:/config/config_db_uat.properties" />
+	</beans>
+	
+	<beans profile="prod">
+		<context:property-placeholder
+			ignore-resource-not-found="true"
+			location="classpath:/config/config_base_prod.properties,classpath:/config/config_db_prod.properties" />
+	</beans>
+
+</beans>
+
