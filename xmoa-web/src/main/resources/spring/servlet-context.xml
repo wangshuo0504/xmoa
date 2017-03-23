@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<bean id="handlerExceptionResolver" class="com.zkxy.xmoa.common.exception.ExceptionHandler">
+		<property name="messageConverters">  
+        <list>  
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+            <!-- JSON转换器无需设置mediaType,由外部客户端调用时，手动设置相关mediaType -->  
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+        </list>  
+    </property>  
+	</bean>  
+
+	
+	<!-- 读取对应的controller    工具类 SpringWiredBean -->
+	<context:component-scan base-package="com.**.web">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	
+	<!-- <aop:aspectj-autoproxy/>
+	
+	<bean id="ajaxRequestExceptionAspect" class="com.zkxy.xmoa.common.exception.AjaxRequestExceptionAspect"/>   -->
+	<!--使用jackson实现json输出 -->
+
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg value="yyyy-MM-dd HH:mm:ss"/>
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+			
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!--格式化转换器-->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+			<set>
+				<bean class="com.zkxy.xmoa.common.tools.DateFormatter"></bean>
+			</set>
+		</property>
+	</bean>
+
+
+	<!--配置拦截器, 多个拦截器,顺序执行 -->
+	<!--<mvc:interceptors>-->
+		<!--&lt;!&ndash;登陆拦截&ndash;&gt;-->
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/*"/>-->
+			<!--<mvc:mapping path="/*.do"/>-->
+			<!--<mvc:mapping path="/*/*.do"/>-->
+			<!--&lt;!&ndash;排除拦截的地址&ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/login/**"/>-->
+		   <!--<bean class="LoginInterceptor" />-->
+		<!--</mvc:interceptor>-->
+		<!--&lt;!&ndash;防止表单重复提交&ndash;&gt;-->
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/**"/>-->
+			<!--<bean class="FormRepeatInterceptor" />-->
+		<!--</mvc:interceptor>-->
+	<!--</mvc:interceptors>-->
+
+
+	<!-- 把对静态资源的访问由HandlerMapping转到 org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler 
+		处理并返回. DefaultServletHttpRequestHandler使用就是各个Servlet容器自己的默认Servlet,这样就不用配置<mvc:resources/>,
+		web.xml也不用配置<servlet-mapping>
+		-->
+	<mvc:default-servlet-handler/>
+
+
+	<!-- 如果没有被 FreeMarker截获到，则执行jsp解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- json解析器 -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
+		</property>
+		<property name="ignoreAcceptHeader" value="true" />
+	</bean>
+
+	<!-- 上传内容解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<!-- 国际化配置 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="config/messages" />
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	</bean>
+
+
+</beans>

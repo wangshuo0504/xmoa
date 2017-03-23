@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!--properties 文件配置-->
+	<import resource="classpath*:spring/applicationContext-profile.xml" />
+	<import resource="classpath*:applicationContext-db.xml" />
+
+	<!-- 注解一般都会配置扫描包路径选项   -->
+	<context:component-scan base-package="com.zkxy.xmoa" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />   	
+	</context:component-scan>
+
+
+    <bean id="springUtil" class="com.zkxy.xmoa.util.SpringUtil"></bean>
+	<bean id="dictDataService" class="com.zkxy.xmoa.common.DictDataServiceImpl"></bean>
+</beans>

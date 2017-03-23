@@ -1,0 +1,24 @@
+{"name":"系统管理","url":"#","child":[
+  {"name":"资源管理","url":"/xmoa/module/toMain.do","icon":"fa-cog"},
+  {"name":"组织管理","url":"#","icon":"fa-users","child":[
+    {"name":"单位管理","url":"/xmoa/dept/toMain.do","icon":""},
+    {"name":"群组管理","url":"/xmoa/group/toMain.do","icon":""}
+  ]},
+  {"name":"用户管理","url":"/xmoa/user/toMain.do","icon":"fa-user"},
+  {"name":"角色管理","url":"#","icon":"fa-th-large","child":[
+    {"name":"业务角色管理","url":"/xmoa/businessRole/toMain.do","icon":""},
+    {"name":"系统角色管理","url":"/xmoa/systemRole/toMain.do","icon":""}
+  ]},
+  {"name":"权限管理","url":"","icon":"fa-shield","child":[
+    {"name":"功能权限管理","url":"/xmoa/actionRight/toMain.do","icon":""},
+    {"name":"角色权限管理","url":"/xmoa/actionRight/toRoleMain.do","icon":""},
+    {"name":"数据权限管理","url":"#","icon":""}
+  ]},
+  {"name":"基础代码","url":"/xmoa/dictData/toMain.do","icon":"fa-cogs"},
+  {"name":"日志管理","url":"","icon":"fa-calendar-o"},
+  {"name":"主题管理","url":"#","icon":"fa-dashboard"},
+  {"name":"其他工具管理","url":"#","icon":"fa-cube","child":[
+    {"name":"FAQ","url":"#","icon":""},
+    {"name":"短信","url":"#","icon":""}
+  ]}
+]}

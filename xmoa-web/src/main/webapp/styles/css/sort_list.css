@@ -1,0 +1,40 @@
+
+ul li {
+    list-style-type: none;
+}
+.sortPanel{
+    position: relative;
+    height: 100%;
+    padding-top: 15px;
+}
+
+.info-box.bg-aqua{
+    min-height:50px;
+    margin-bottom: 10px;
+}
+
+.info-box.bg-aqua .info-box-icon{
+    height:50px;
+    width: 50px;
+    line-height: 50px;
+}
+
+.info-box.bg-aqua .info-box-content{
+    height:50px;
+}
+
+.info-box.bg-aqua .info-box-content .info-box-number{
+    height:40px;
+    line-height:40px;
+    font-size: 24px;
+}
+li.placeHolder{margin-bottom: 10px}
+
+.placeHolder div { background-color:white !important; border:dashed 1px gray !important;  height:50px; }
+
+
+.bottom-box {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+}
